@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Babee 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --secondary-purple: #ffc3a0;
+            --glass: rgba(255, 255, 255, 0.2);
+            --text-color: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            color: var(--text-color);
+            overflow: hidden; 
+            height: 100vh;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #loader {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            background: white;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .heart-loader {
+            font-size: 50px;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            line-height: 1;
+        }
+
+        section {
+            height: 100vh;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        section.active {
+            display: flex; /* Shown when active */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #d63384;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #ff758f;
+            transform: scale(1.05);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .photo-slot {
+            aspect-ratio: 1;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid white;
+            transition: 0.3s;
+        }
+
+        .photo-slot:hover {
+            transform: rotate(3deg) scale(1.05);
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1rem; }
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="heart-loader">💖</div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
+        <audio id="bg-music" loop>
+            <source src="Aitbaar Dendi Haan - RaagWorld.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <section id="s1" class="active" style="display: flex;">
+        <div class="glass-card">
+            <h1>Hello, Babee 💖</h1>
+            <button class="btn" onclick="nextSection(2)">Tap to Begin ✨</button>
+        </div>
+    </section>
+
+    <section id="s2">
+        <div class="glass-card">
+            <h1>Happy Birthday, My Love 🎂</h1>
+            <p>Today is the most special day because it's the day the world got a little brighter. To the most beautiful person I know...</p>
+            <button class="btn" onclick="nextSection(3)">Next Surprise 🎁</button>
+        </div>
+    </section>
+
+    <section id="s3">
+        <div class="glass-card">
+            <h1>A Little Message... 💌</h1>
+            <p>"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</p>
+            <h2 style="font-family: 'Dancing Script'; color: #ff4d6d; margin-bottom: 20px;">I Love You, My Babee from Aadi ❤️</h2>
+            <button class="btn" onclick="nextSection(4)">See Our Memories 📸</button>
+        </div>
+    </section>
+
+    <section id="s4">
+        <div class="glass-card" style="max-width: 800px;">
+            <h1>Our Moments ✨</h1>
+            <div class="gallery">
+                <div class="photo-slot"><img src="WhatsApp Image 2026-04-17 at 17.03.19.jpeg" alt="Memory 1"></div>
+                <div class="photo-slot"><img src="WhatsApp Image 2026-04-17 at 17.08.17 (1).jpeg" alt="Memory 2"></div>
+                <div class="photo-slot"><img src="WhatsApp Image 2026-04-17 at 17.09.55.jpeg" alt="Memory 3"></div>
+                <div class="photo-slot"><img src="WhatsApp Image 2026-04-17 at 17.08.17.jpeg" alt="Memory 4"></div>
+            </div>
+            <br>
+            <button class="btn" onclick="location.reload()">Back to Start 🔄</button>
+        </div>
+    </section>
+
+    <script>
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 1000);
+            }, 1500);
+            initHearts();
+        };
+
+        let currentStep = 1;
+        function nextSection(step) {
+            const current = document.getElementById(`s${currentStep}`);
+            const next = document.getElementById(`s${step}`);
+            
+            current.classList.remove('active');
+            
+            setTimeout(() => {
+                current.style.display = 'none';
+                next.style.display = 'flex';
+                
+                // Audio play logic
+                let audio = document.getElementById('bg-music');
+                if(audio.paused) {
+                    audio.play().then(() => {
+                        document.getElementById('music-icon').innerText = "⏸️";
+                    }).catch(e => console.log("Music waiting for interaction"));
+                }
+
+                setTimeout(() => {
+                    next.classList.add('active');
+                    currentStep = step;
+                }, 50);
+            }, 800);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const icon = document.getElementById('music-icon');
+            if (audio.paused) {
+                audio.play();
+                icon.innerText = "⏸️";
+            } else {
+                audio.pause();
+                icon.innerText = "🎵";
+            }
+        }
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function initHearts() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            hearts = [];
+            for(let i = 0; i < 30; i++) {
+                hearts.push(new Heart());
+            }
+            animate();
+        }
+
+        class Heart {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 15 + 10;
+                this.speed = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 77, 109, ${this.opacity})`;
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText("❤️", this.x, this.y);
+            }
+            update() {
+                this.y -= this.speed;
+                if(this.y < -20) this.reset();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            hearts.forEach(h => {
+                h.update();
+                h.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+    </script>
+</body>
+</html>
